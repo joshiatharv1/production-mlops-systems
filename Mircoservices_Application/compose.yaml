@@ -1,0 +1,25 @@
+services:
+  inventory:
+    build: ./inventory
+    ports:
+      - "8003:8003"          # fixed to 8003
+    volumes:
+      - ./inventory:/app
+    command: uvicorn main:app --host 0.0.0.0 --port 8003 --reload
+    depends_on:
+      - redis
+  
+  payment:
+    build: ./payment
+    ports:
+      - "8004:8004"
+    volumes:
+      - ./payment:/app
+    command: uvicorn main:app --host 0.0.0.0 --port 8004 --reload
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"                                            

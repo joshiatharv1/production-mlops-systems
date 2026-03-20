@@ -1,0 +1,3 @@
+fastapi[all]
+redis-om
+uvicorn
